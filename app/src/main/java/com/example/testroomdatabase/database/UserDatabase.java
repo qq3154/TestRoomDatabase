@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.testroomdatabase.User;
 
-@Database(entities = {User.class}, version = 1)
+//@Database(entities = {User.class}, version = 1)
 public abstract class UserDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "user.db";

@@ -9,18 +9,18 @@ import com.example.testroomdatabase.User;
 
 import java.util.List;
 
-@Dao
+//@Dao
 public interface UserDAO {
 
-    @Insert
+    //@Insert
     void insertUser(User user);
 
-    @Query("SELECT * FROM user")
+    //@Query("SELECT * FROM user")
     List<User> getListUser();
 
-    @Query("SELECT * FROM USER WHERE username = :username" )
+    //Query("SELECT * FROM USER WHERE username = :username" )
     List<User> checkUser(String username);
 
-    @Update
+    //@Update
     void updateUser(User user);
 }

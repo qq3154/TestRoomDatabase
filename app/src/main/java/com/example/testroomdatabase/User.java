@@ -5,15 +5,21 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "user")
+//@Entity(tableName = "user")
 public class User implements Serializable {
 
-    @PrimaryKey(autoGenerate = true)
+    //@PrimaryKey(autoGenerate = true)
     private int id;
     private String username;
     private String address;
 
     public User(String username, String address) {
+        this.username = username;
+        this.address = address;
+    }
+
+    public User(int id, String username, String address) {
+        this.id = id;
         this.username = username;
         this.address = address;
     }

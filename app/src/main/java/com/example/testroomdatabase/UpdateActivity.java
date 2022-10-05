@@ -12,10 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.testroomdatabase.database.UserDatabase;
+import com.example.testroomdatabase.sqLite.DatabaseHelper;
 
 public class UpdateActivity extends AppCompatActivity {
 
-    //public static final String NAME = "name";
     private EditText edtUsername;
     private EditText edtAddress;
     private Button btnUpdateUser;
@@ -58,7 +58,10 @@ public class UpdateActivity extends AppCompatActivity {
         mUser.setUsername(strUsername);
         mUser.setAddress(strAddress);
 
-        UserDatabase.getInstance(this).userDAO().updateUser(mUser);
+        //UserDatabase.getInstance(this).userDAO().updateUser(mUser);
+
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        dbHelper.UpdateUser(mUser);
         Toast.makeText(this, "Update user successfully", Toast.LENGTH_SHORT).show();
 
         Intent intentResult = new Intent();

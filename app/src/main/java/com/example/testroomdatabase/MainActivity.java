@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.testroomdatabase.database.UserDatabase;
+import com.example.testroomdatabase.sqLite.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private UserAdapter userAdapter;
     private List<User> mListUser;
+    DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,13 @@ public class MainActivity extends AppCompatActivity {
                 clickUpdateUser(user);
             }
         });
-        mListUser = new ArrayList<>();
-        userAdapter.setData(mListUser);
+//        mListUser = new ArrayList<>();
+//        userAdapter.setData(mListUser);
+
+        dbHelper = new DatabaseHelper(this);
+        //dbHelper.DeleteAllUsers();
+
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcvUser.setLayoutManager(linearLayoutManager);
@@ -86,12 +93,17 @@ public class MainActivity extends AppCompatActivity {
         User user = new User(strUsername, strAddress);
 
 
-        if(isUserExist(user)){
+
+
+        if(dbHelper.CheckUserExist(strUsername)){
             Toast.makeText(this, "User exist!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        UserDatabase.getInstance(this).userDAO().insertUser(user);
+
+        long personId = dbHelper.insertUser(strUsername, strAddress);
+
+        //UserDatabase.getInstance(this).userDAO().insertUser(user);
 
         Toast.makeText(this, "Add user successfully", Toast.LENGTH_SHORT).show();
 
@@ -114,8 +126,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void  loadData(){
-        mListUser = UserDatabase.getInstance(this).userDAO().getListUser();
-        userAdapter.setData(mListUser);
+        //mListUser = UserDatabase.getInstance(this).userDAO().getListUser();
+        //userAdapter.setData(mListUser);
+
+
+        userAdapter.setData(dbHelper.getUsers());
     }
 
     private boolean isUserExist(User user){
