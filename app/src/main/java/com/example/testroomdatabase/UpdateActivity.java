@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.testroomdatabase.database.UserDatabase;
 import com.example.testroomdatabase.sqLite.DatabaseHelper;
 
 public class UpdateActivity extends AppCompatActivity {
@@ -41,13 +40,13 @@ public class UpdateActivity extends AppCompatActivity {
         btnUpdateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateUser();
+                updateUser(mUser);
             }
         });
 
     }
 
-    private void updateUser() {
+    private void updateUser(User user) {
         String strUsername = edtUsername.getText().toString().trim();
         String strAddress = edtAddress.getText().toString().trim();
 
@@ -55,13 +54,13 @@ public class UpdateActivity extends AppCompatActivity {
             return;
         }
 
-        mUser.setUsername(strUsername);
-        mUser.setAddress(strAddress);
+        user.setUsername(strUsername);
+        user.setAddress(strAddress);
 
         //UserDatabase.getInstance(this).userDAO().updateUser(mUser);
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        dbHelper.UpdateUser(mUser);
+        dbHelper.updateUser(user);
         Toast.makeText(this, "Update user successfully", Toast.LENGTH_SHORT).show();
 
         Intent intentResult = new Intent();

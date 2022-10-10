@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-
 import com.example.testroomdatabase.User;
 
 import java.util.ArrayList;
@@ -34,9 +32,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "DELETE FROM %s;",
             TABLE_NAME
     );
-
-
-
 
 
     private SQLiteDatabase database;
@@ -96,7 +91,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public Boolean CheckUserExist(String username){
+    public Boolean checkUserExist(String username){
         List<User> mUserList = getUsers();
         for (User user : mUserList) {
             String myUsername = user.getUsername();
@@ -108,11 +103,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public void DeleteAllUsers(){
+    public void deleteAllUsers(){
         database.execSQL(DATABASE_DELETE_ALL);
     }
 
-    public void UpdateUser(User user){
+    public void updateUser(User user){
 
 
         String DATABASE_UPDATE = String.format("UPDATE %s SET %s = '%s', %s = '%s' WHERE %s = %s;",
@@ -121,5 +116,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //String a = "UPDATE users SET username = a, address = b";
         //database.execSQL(a);
         database.execSQL(DATABASE_UPDATE);
+    }
+
+    public void deleteUser(User user){
+        String DATABASE_DELETE = String.format("DELETE FROM %s  WHERE %s = %s;",
+                TABLE_NAME, ID_COLUMN, user.getId());
+        database.execSQL(DATABASE_DELETE);
     }
 }

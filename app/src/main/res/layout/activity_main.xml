@@ -40,4 +40,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"/>
 
+    <Button
+        android:id="@+id/btn_deleteUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/design_default_color_on_primary"
+        android:textSize="16dp"
+        android:text="Delete All"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/white"/>
+
 </LinearLayout>

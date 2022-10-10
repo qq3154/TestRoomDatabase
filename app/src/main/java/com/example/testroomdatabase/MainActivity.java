@@ -4,7 +4,6 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 import com.example.testroomdatabase.database.UserDatabase;
 import com.example.testroomdatabase.sqLite.DatabaseHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText edtAddress;
     private Button btnAddUser;
     private RecyclerView rcvUser;
+
+    private Button btnDeleteUsers;
 
     private UserAdapter userAdapter;
     private List<User> mListUser;
@@ -48,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void updateUser(User user) {
                 clickUpdateUser(user);
+            }
+
+            @Override
+            public void deleteUser(User user) {
+                clickDeleteUser(user);
             }
         });
 //        mListUser = new ArrayList<>();
@@ -69,9 +74,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnDeleteUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteUsers();
+            }
+        });
+
         loadData();
 
 
+//        dbHelper.getExpenses();
+//        dbHelper.insertExpense("test", "test", 1);
+//        dbHelper.getExpenses();
+    }
+
+    private void clickDeleteUser(User user) {
+    dbHelper.deleteUser(user);
+    loadData();
+    }
+
+    private void deleteUsers() {
+        dbHelper.deleteAllUsers();
+        loadData();
     }
 
 
@@ -80,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         edtAddress = findViewById(R.id.edt_address);
         btnAddUser = findViewById(R.id.btn_addUser);
         rcvUser = findViewById(R.id.rcv_user);
+        btnDeleteUsers = findViewById(R.id.btn_deleteUsers);
     }
 
     private void addUser(){
@@ -95,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        if(dbHelper.CheckUserExist(strUsername)){
+        if(dbHelper.checkUserExist(strUsername)){
             Toast.makeText(this, "User exist!", Toast.LENGTH_SHORT).show();
             return;
         }
